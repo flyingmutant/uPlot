@@ -2253,6 +2253,12 @@ export default function uPlot(opts, data, then) {
 				let isFocused = allFocused || i2 == 0 || i2 == i;
 				s._focus = allFocused ? null : isFocused;
 				_setAlpha && setAlpha(i2, isFocused ? 1 : focus.alpha);
+				if (showLegend && legendRows[i2]) {
+                                       if (allFocused || i2 === i)
+                                               legendRows[i2].classList.add("plot-legend-focus");
+                                       else
+                                               legendRows[i2].classList.remove("plot-legend-focus");
+                                }
 			});
 
 			focusedSeries = i;

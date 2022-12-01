@@ -2880,7 +2880,7 @@ function uPlot(opts, data, then) {
 		legendCols = multiValLegend ? getMultiVals(self, 1, 0) : {_: 0};
 
 		for (let k in legendCols)
-			NULL_LEGEND_VALUES[k] = "--";
+			NULL_LEGEND_VALUES[k] = "—";
 	}
 
 	if (showLegend) {
@@ -2892,8 +2892,10 @@ function uPlot(opts, data, then) {
 			let head = placeTag("tr", LEGEND_THEAD, legendEl);
 			placeTag("th", null, head);
 
-			for (var key in legendCols)
+			for (var key in legendCols) {
 				placeTag("th", LEGEND_LABEL, head).textContent = key;
+				placeTag("th", LEGEND_LABEL, head).setAttribute("title", key);
+			}
 		}
 		else {
 			addClass(legendEl, LEGEND_INLINE);
@@ -2934,6 +2936,7 @@ function uPlot(opts, data, then) {
 
 		let text = placeDiv(LEGEND_LABEL, label);
 		text.textContent = s.label;
+		text.setAttribute("title", s.label);
 
 		if (i > 0) {
 			if (!markers.show)
@@ -2969,7 +2972,7 @@ function uPlot(opts, data, then) {
 
 		for (var key in legendCols) {
 			let v = placeTag("td", LEGEND_VALUE, row);
-			v.textContent = "--";
+			v.textContent = "—";
 			cells.push(v);
 		}
 
@@ -4580,6 +4583,12 @@ function uPlot(opts, data, then) {
 				let isFocused = allFocused || i2 == 0 || i2 == i;
 				s._focus = allFocused ? null : isFocused;
 				_setAlpha && setAlpha(i2, isFocused ? 1 : focus.alpha);
+				if (showLegend && legendRows[i2]) {
+                                       if (allFocused || i2 === i)
+                                               legendRows[i2].classList.add("plot-legend-focus");
+                                       else
+                                               legendRows[i2].classList.remove("plot-legend-focus");
+                                }
 			});
 
 			focusedSeries = i;

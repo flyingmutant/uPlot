@@ -565,8 +565,10 @@ export default function uPlot(opts, data, then) {
 			let head = placeTag("tr", LEGEND_THEAD, legendEl);
 			placeTag("th", null, head);
 
-			for (var key in legendCols)
+			for (var key in legendCols) {
 				placeTag("th", LEGEND_LABEL, head).textContent = key;
+				placeTag("th", LEGEND_LABEL, head).setAttribute("title", key);
+			}
 		}
 		else {
 			addClass(legendEl, LEGEND_INLINE);
@@ -607,6 +609,7 @@ export default function uPlot(opts, data, then) {
 
 		let text = placeDiv(LEGEND_LABEL, label);
 		text.textContent = s.label;
+		text.setAttribute("title", s.label);
 
 		if (i > 0) {
 			if (!markers.show)
